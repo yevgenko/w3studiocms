@@ -49,8 +49,8 @@ var w3sTemplate = Class.create({
 	          }, 
 	        onComplete:function(request, json)
 	          { 
-	            if (json[0][1] == 1){   
-	              W3sTemplate.currentCss = json[1][1];
+	            if (json[0][1] == 1){    
+	              W3sTemplate.currentCss = json[1][1]; 
                 W3sTools.temaChange(json[1][1]);
 	              W3sMenuManager.load('tbMenuManager');
 	              W3sWindow.closeModal(); 

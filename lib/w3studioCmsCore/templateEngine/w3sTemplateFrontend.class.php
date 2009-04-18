@@ -110,19 +110,25 @@ class w3sTemplateEngineFrontend extends w3sTemplateEngine
    */ 
   public function retrieveTemplateStylesheets($contents = null)
   {    
-    $result = array();
     $stylesheets = $this->getStylesheetsFromContents($contents);
     
     // Returns the stylesheets
     $stylesheetResults = array();
-		foreach ($stylesheets[0] as $stylesheet)
+		foreach ($stylesheets as $style)
     {
-			$stylesheetsAttributes = w3sCommonFunctions::getHtmlAttributes($stylesheet, 'link');
-      $stylesheetResults[] = array('href' => $stylesheetsAttributes['href'], 'media' => $stylesheetsAttributes['media']);
+      $stylesheet = $style[0];
+      if ($style[1] == 0)
+      {
+        $stylesheetsAttributes = w3sCommonFunctions::getHtmlAttributes($stylesheet, 'link');
+        $stylesheetResults[] = array('href' => $stylesheetsAttributes['href'], 'media' => $stylesheetsAttributes['media'], 'conditional' => 0);
+      }
+      else
+      {
+        $stylesheetResults[] = array('href' => $stylesheet, 'conditional' => 1);
+      }
     }
-    $result = $stylesheetResults;
     
-    return $result; 
+    return $stylesheetResults;
   }
   
   /** 

@@ -14,5 +14,6 @@
 
   // Gives a chance to eventually included components to use this helpers 
   use_helper('I18N', 'Javascript');
- 
+
+  echo $conditionalStylesheets;
 	echo $template->renderPage();

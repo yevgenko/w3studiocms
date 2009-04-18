@@ -293,19 +293,31 @@ abstract class w3sTemplateEngine
     // Gets all the project's templates from the database
     $templates = DbFinder::from('W3sTemplate')->  
 		                       leftJoin('W3sProject')->
-		                       find();   
-    
+                           find();
     $result = ''; 
     foreach($templates as $template){
     	$templateContents = w3sCommonFunctions::readFileContents(self::getTemplateFile($template->getW3sProject()->getProjectName(), $template->getTemplateName()));
     	$stylesheets = $this->getStylesheetsFromContents($templateContents);  
-    	foreach ($stylesheets[0] as $stylesheet){    
-    		
-    		// Set for every stylesheet the title that corresponds to the stylesheet's name.
-    		// This is required by the function that changes the template's stylesheet    		
-    		$stylesheetName = basename(w3sCommonFunctions::getTagAttribute($stylesheet, 'href'));
-    		$stylesheetName = str_replace('.css', '', $stylesheetName);
-	      $result .= str_replace('<link', sprintf('<link title="%s" ', $stylesheetName), $stylesheet) . "\n";    		
+    	foreach ($stylesheets as $style){    
+        $stylesheet = $style[0];
+
+        /*
+        switch($_SERVER["HTTP_USER_AGENT"];
+        'MSIE 5.5' => 'IE 5.5',
+        'MSIE 5' => 'IE 5',
+        'MSIE 6.0' => 'IE 6',
+        'MSIE 6.0' => 'IE 7'
+        */
+        if ($style[1] == 0 || w3sCommonFunctions::getTagAttribute($stylesheet, 'media') != "print")
+        {
+
+          // Set for every stylesheet the title that corresponds to the stylesheet's name.
+          // This is required by the function that changes the template's stylesheet
+          $stylesheetName = basename(w3sCommonFunctions::getTagAttribute($stylesheet, 'href'));
+
+          $stylesheetName = str_replace('.css', '', $stylesheetName);
+          $result .= str_replace('<link', sprintf('<link title="%s" ', $stylesheetName), $stylesheet) . "\n";
+        }
 	    }
     }
 
@@ -319,15 +331,16 @@ abstract class w3sTemplateEngine
    * @return string  The stylesheets name formatted as style1,[style2,style3,...]
    *
    */ 
-  public function retrieveTemplateStylesheets() // $contents = null
+  public function retrieveTemplateStylesheets() 
   {    
     $stylesheets = $this->getStylesheetsFromContents($this->pageContents);
     $this->pageContents = $this->removeStylesheetsFromTemplate($stylesheets, $this->pageContents);
     
     $stylesheetResults = '';
-	  foreach ($stylesheets[1] as $stylesheet)
+	  foreach ($stylesheets as $stylesheet)
     {
-	    $stylesheetResults .= str_replace('.css', '',basename($stylesheet)) . ',';
+	    //if ($stylesheet[1] == 0)
+      $stylesheetResults .= str_replace('.css', '', basename(w3sCommonFunctions::getTagAttribute($stylesheet[0], 'href'))) . ',';
 	  }
     
     return $stylesheetResults; 
@@ -387,9 +400,9 @@ abstract class w3sTemplateEngine
    */ 
   protected function removeStylesheetsFromTemplate($stylesheets, $contents)
   {
-    foreach ($stylesheets[0] as $stylesheet)
+    foreach ($stylesheets as $stylesheet)
     {
-      $contents = str_replace($stylesheet, '', $contents); 
+      $contents = str_replace($stylesheet[0], '', $contents);
     }
     
     return $contents;
@@ -527,9 +540,33 @@ abstract class w3sTemplateEngine
    */
   protected function getStylesheetsFromContents($templateContents)
   {    
+    preg_match_all('/\<\!--\s*\[if\s*lte.*?\].*?\<\!\[\s*endif\s*\]--\>/', $templateContents, $conditionalStylesheets);
     preg_match_all('/<link.*?rel\s*=\s*["|\']stylesheet["|\'].*?href\s*=\s*["|\'](.*?)["|\'].*?\/>/', $templateContents, $stylesheets);
+   
+    $siteStylesheets = array();
     
-    return $stylesheets; 
+    foreach($stylesheets[0] as $stylesheet)
+    {
+      $v = array();
+      foreach($conditionalStylesheets[0] as $conditionalStylesheet)
+      {
+        if (strpos($conditionalStylesheet, $stylesheet) !== false)
+        {
+          $v = array($conditionalStylesheet, 1);
+        }
+      }
+      if (count($v) == 0)
+      {
+        $siteStylesheets[] = array($stylesheet, 0);
+      }
+      else
+      {
+        $siteStylesheets[] = $v;
+      }
+    }
+
+    //print_r($siteStylesheets); //exit;
+    return $siteStylesheets;
   }
   
 /** 

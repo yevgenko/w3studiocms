@@ -97,7 +97,7 @@ var w3sTools = Class.create({
 	    if(templateStyles == ''){
 	      // disattiva tutti gli stili con il title
 	      W3sTools.templateChange();
-	    }else{
+	    }else{ 
 	      // attiva soltanto lo stile scelto
 	      eval("W3sTools.templateChange('" + templateStyles + "')");
 	    }
