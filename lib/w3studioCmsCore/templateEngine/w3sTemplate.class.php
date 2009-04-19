@@ -290,6 +290,7 @@ abstract class w3sTemplateEngine
    */  
   public function retrieveSiteStylesheets()
   {    
+
     // Gets all the project's templates from the database
     $templates = DbFinder::from('W3sTemplate')->  
 		                       leftJoin('W3sProject')->
@@ -300,14 +301,6 @@ abstract class w3sTemplateEngine
     	$stylesheets = $this->getStylesheetsFromContents($templateContents);  
     	foreach ($stylesheets as $style){    
         $stylesheet = $style[0];
-
-        /*
-        switch($_SERVER["HTTP_USER_AGENT"];
-        'MSIE 5.5' => 'IE 5.5',
-        'MSIE 5' => 'IE 5',
-        'MSIE 6.0' => 'IE 6',
-        'MSIE 6.0' => 'IE 7'
-        */
         if ($style[1] == 0 || w3sCommonFunctions::getTagAttribute($stylesheet, 'media') != "print")
         {
 
