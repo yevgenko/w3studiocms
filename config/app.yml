@@ -5,10 +5,10 @@ all:
   webeditor: tinyMCE
   
   # Path to images directory 
-  images_path: %SF_WEB_DIR%/images
+  images_path: %SF_WEB_DIR%/uploads/assets
   
   # Absolute path to images directory 
-  absolute_images_path: '/images/'
+  absolute_images_path: '/uploads/assets/'
   
   # Configuration file for loading scripts
   w3s_scripts_dir: %SF_PLUGINS_DIR%/sfW3studioCmsPlugin/config/w3s_scripts
