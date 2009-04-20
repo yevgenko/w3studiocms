@@ -590,16 +590,24 @@ class w3sCommonFunctions
   }
 
   /**
-   * Check current location and return:
-   * - basename if standard location
-   * - src if custom location
-   * 
-   * @param string $fullPath The full path to file
-   * @param string $baseDir Standard document(web) base dir
+   * Returns filename or absolute path depend on current location
    *
-   * @return string
+   * Examples:
+   * 1)
+   *  $fullPath = /var/www/uploads/assets/image.jpg
+   *  $baseDir = /uploads/assets
+   *  return image.jpg (filename)
+   * 2)
+   *  $fullPath = /var/www/images/image.jpg
+   *  $baseDir = /uploads/assets
+   *  return /images/image.jpg (absolute path)
+   *
+   * @param string $fullPath The full path to file
+   * @param string $baseDir Document base dir
+   *
+   * @return string Filename or absolute path, depend on current location
    */
-  static public function getStdBasename($fullPath, $baseDir)
+  public static function getStdBasename($fullPath, $baseDir)
   {
     $basename = basename($fullPath);
     $stdPath = w3sCommonFunctions::checkLastDirSeparator(sfConfig::get('sf_web_dir').$baseDir) . $basename;
