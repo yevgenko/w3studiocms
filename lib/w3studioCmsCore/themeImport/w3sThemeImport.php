@@ -77,7 +77,7 @@ class w3sThemeImport implements w3sEditor
   * @param Array
   * @param Array
   *
-  * @return Array - Contain the description of the generated assets publishing events
+  * @return Array - Contains the description of the generated assets publishing events
   *
   */
   public function publishAssets($arguments = array(), $options = array())
@@ -118,10 +118,10 @@ class w3sThemeImport implements w3sEditor
   * @author     Yevgeniy Viktorov <wik@osmonitoring.com>
   *             Giansimon Diblas  <giansimon.diblas@w3studiocms.com>
   *
-  * @param Array
-  * @param Array
+  * @param String - Theme name
+  * @param Object - A filesystem object
   *
-  * @return Array - Contain the description of the generated assets publishing events
+  * @return string - Contain the description of the generated assets publishing events
   *
   */
   public function unpublishAsset($param, $filesystem = null)

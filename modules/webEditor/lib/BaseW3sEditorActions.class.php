@@ -35,28 +35,46 @@ class BaseW3sEditorActions extends sfActions
    */
   public function executeLoadPage($request)
   {    
+    /*
     if ($request->hasParameter('prevPage'))
     {
-      $this->status = 0;
-      if ($this->getUser()->isAuthenticated())
+      }
+    else
+    {
+      $this->status = 16;
+      $this->getResponse()->setStatusCode(404);
+      $this->getResponse()->setHttpHeader('X-JSON', sprintf('([["status", "%s"]])', $this->status));
+    }
+    */
+    $prevPage = ($request->hasParameter('prevPage')) ? $request->getParameter('prevPage') : '';
+    $this->status = 0;
+    if ($this->getUser()->isAuthenticated())
+    {
+      $this->template = new w3sTemplateEngineEditor($request->getParameter('lang'), $request->getParameter('page'));
+      if ($this->template->getIdLanguage() != -1 && $this->template->getIdPage() != -1)
       {
-        $this->template = new w3sTemplateEngineEditor($this->getRequestParameter('lang'), $this->getRequestParameter('page'));        
-        if ($this->template->getIdLanguage() != -1 && $this->template->getIdPage() != -1)
-        {
-          $this->status = ($this->template->isPageFree($this->getRequestParameter('prevPage'))) ? 1 : 4;         
-        }
-        else
-        {
-          $this->status = 8;
-        }
+        $this->status = ($this->template->isPageFree($prevPage)) ? 1 : 4;
       }
       else
       {
-        $this->status = 2;
+        $this->status = 8;
       }
+    }
+    else
+    {
+      $this->status = 2;
+    }
 
-      if ($this->status != 1) $this->getResponse()->setStatusCode(404);
-      $this->getResponse()->setHttpHeader('X-JSON', sprintf('([["status", "%s"], ["stylesheet", "%s"]])', $this->status, $this->template->retrieveTemplateStylesheets()));
+    if ($this->status != 1) $this->getResponse()->setStatusCode(404);
+    $this->getResponse()->setHttpHeader('X-JSON', sprintf('([["status", "%s"], ["stylesheet", "%s"]])', $this->status, $this->template->retrieveTemplateStylesheets()));
+    
+  }
+  
+  public function executePreview($request)
+  {
+    /*
+    if ($request->hasParameter('prevPage'))
+    {
     }
     else
     {
@@ -64,19 +82,15 @@ class BaseW3sEditorActions extends sfActions
       $this->getResponse()->setStatusCode(404);
       $this->getResponse()->setHttpHeader('X-JSON', sprintf('([["status", "%s"]])', $this->status));
     }
-  }
-  
-  public function executePreview($request)
-  {
-    if ($request->hasParameter('prevPage'))
-    {
+    */
+    $prevPage = ($request->hasParameter('prevPage')) ? $request->getParameter('prevPage') : '';
       $this->status = 0;
       if ($this->getUser()->isAuthenticated())
       {
-        $this->template = new w3sTemplateEnginePreview($this->getRequestParameter('lang'), $this->getRequestParameter('page'));
+        $this->template = new w3sTemplateEnginePreview($request->getParameter('lang'), $request->getParameter('page'));
         if ($this->template->getIdLanguage() != -1 && $this->template->getIdPage() != -1)
         {
-          $this->status = ($this->template->isPageFree($this->getRequestParameter('prevPage'))) ? 1 : 4;
+          $this->status = ($this->template->isPageFree($prevPage)) ? 1 : 4;
         }
         else
         {
@@ -90,13 +104,7 @@ class BaseW3sEditorActions extends sfActions
 
       if($this->status != 1) $this->getResponse()->setStatusCode(404);
       $this->getResponse()->setHttpHeader('X-JSON', sprintf('([["status", "%s"], ["stylesheet", "%s"]])', $this->status, $this->template->retrieveTemplateStylesheets()));
-    }
-    else
-    {
-      $this->status = 16;
-      $this->getResponse()->setStatusCode(404);
-      $this->getResponse()->setHttpHeader('X-JSON', sprintf('([["status", "%s"]])', $this->status));
-    }
+    
   }
 
   /**

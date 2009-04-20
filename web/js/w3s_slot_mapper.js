@@ -78,10 +78,10 @@ var w3sSlotMapper = Class.create({
   map: function(inverted)
   {    
     if (inverted == null) inverted = false;
-    if ($('w3s_sm_source').value != '' &&  $('w3s_sm_dest').value != '')
+    if ($('w3s_sm_source_id').value != '' &&  $('w3s_sm_dest_id').value != '')
     {
-      var source = (!inverted) ? $('w3s_sm_source').value : $('w3s_sm_dest').value;
-      var dest = (!inverted) ? $('w3s_sm_dest').value : $('w3s_sm_source').value;
+      var source = (!inverted) ? $('w3s_sm_source_id').value : $('w3s_sm_dest_id').value;
+      var dest = (!inverted) ? $('w3s_sm_dest_id').value : $('w3s_sm_source_id').value;
 
       var divs = $('w3s_sm_maps').getElementsByTagName('div');
       var rowClass = (divs.length % 2) ? "w3s_white_row" : "w3s_blue_row";
@@ -92,13 +92,13 @@ var w3sSlotMapper = Class.create({
       var objSourceInput = document.createElement("input");
       objSourceInput.setAttribute('id', 'w3s_sm_source');
       objSourceInput.setAttribute('name', 'w3s_sm_source[]');
-      objSourceInput.setAttribute('type', 'hidden');
+      //objSourceInput.setAttribute('type', 'hidden');
       objSourceInput.setAttribute('value',  source);
 
       var objDestInput = document.createElement("input");
       objDestInput.setAttribute('id', 'w3s_sm_dest');
       objDestInput.setAttribute('name', 'w3s_sm_dest[]');
-      objDestInput.setAttribute('type', 'hidden');
+      //objDestInput.setAttribute('type', 'hidden');
       objDestInput.setAttribute('value',  dest);
 
       var objRowDiv = document.createElement("div");
@@ -131,10 +131,10 @@ var w3sSlotMapper = Class.create({
       Element.removeClassName($(this.currentSelected2), 'currentSelectedSlot');
       Element.addClassName($(this.currentSelected2), 'slotSelected');
 
-      $('w3s_sm_source').value = '';
+      $('w3s_sm_source_id').value = '';
       $('w3s_sm_source_name').value = '';
 
-      $('w3s_sm_dest').value = '';
+      $('w3s_sm_dest_id').value = '';
       $('w3s_sm_dest_name').value = '';
     }
     return false;
@@ -187,7 +187,7 @@ var w3sSlotMapper = Class.create({
       if ($('w3s_slot_mapper1').visible())
       {
         W3sSlotMapper.sourceSelected = id;
-        $('w3s_sm_source').value = id;
+        $('w3s_sm_source_id').value = id;
         $('w3s_sm_source_name').value = name;
         W3sSlotMapper.doSelect(slotName, this.currentSelected1);
         this.currentSelected1 = slotName;
@@ -195,7 +195,7 @@ var w3sSlotMapper = Class.create({
       else
       {
         W3sSlotMapper.destSelected = id;
-        $('w3s_sm_dest').value = id;
+        $('w3s_sm_dest_id').value = id;
         $('w3s_sm_dest_name').value = name;
         W3sSlotMapper.doSelect(slotName, this.currentSelected2);
         this.currentSelected2 = slotName;

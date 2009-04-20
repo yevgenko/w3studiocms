@@ -22,10 +22,19 @@ class BaseW3sWebSiteActions extends sfActions
   {
     $this->template = new w3sTemplateEngineFrontend($this->getRequestParameter('lang'), $this->getRequestParameter('page'));
     $styles = $this->template->retrieveTemplateStylesheets($this->template->getPageContents());
-		
+
+    $this->conditionalStylesheets = '';
     foreach($styles as $style)
     {
-			$this->response->addStyleSheet($style["href"], 'last', array('media' => $style["media"]));
+			if ($style['conditional'] == 0)
+      {
+        $media = ($style["media"] != "") ? array('media' => $style["media"]) : array();
+        $this->response->addStyleSheet($style["href"], 'last', $media);
+      }
+      else
+      {
+        $this->conditionalStylesheets .= $style["href"];
+      }
 		}
 	
     if($this->template->getIdLanguage() == -1)

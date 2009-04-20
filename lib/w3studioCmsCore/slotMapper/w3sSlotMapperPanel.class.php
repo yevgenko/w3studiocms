@@ -33,8 +33,8 @@ class w3sSlotMapperPanel implements w3sEditor
 			  <div id="w3s_sm_commands">%s</div>
         <div id="w3s_sm_current_mapping">
           <table>
-            <tr><td style="text-align:right;font-weight:bold">%s</td><td><input id="w3s_sm_source_name" value="%s" /></td><td><input id="w3s_sm_source" type="hidden" /></td></tr>
-            <tr><td style="text-align:right;font-weight:bold">%s</td><td><input id="w3s_sm_dest_name" value="%s" /></td><td><input id="w3s_sm_dest" type="hidden" /></td></tr>
+            <tr><td style="text-align:right;font-weight:bold">%s</td><td><input id="w3s_sm_source_name" value="%s" /></td><td><input id="w3s_sm_source_id" type="text" /></td></tr>
+            <tr><td style="text-align:right;font-weight:bold">%s</td><td><input id="w3s_sm_dest_name" value="%s" /></td><td><input id="w3s_sm_dest_id" type="text" /></td></tr>
           </table>
         </div>
 				<div id="w3s_sm_maps"><form id="w3s_mapping">%s</form></div>
@@ -43,8 +43,8 @@ class w3sSlotMapperPanel implements w3sEditor
      '<div id="%s" class="%s">
         <div style="float:left;">
         %s
-        <input id="w3s_sm_source" name="w3s_sm_source[]" value="%s" type="hidden" />
-        <input id="w3s_sm_dest" name="w3s_sm_dest[]" value="%s" type="hidden" />
+        <input id="w3s_sm_source" name="w3s_sm_source[]" value="%s" type="text" />
+        <input id="w3s_sm_dest" name="w3s_sm_dest[]" value="%s" type="text" />
         </div>
         <div style="float:right;">%s</div>
       </div>',
