@@ -69,23 +69,36 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
     
     return $this->pageContents;
   }
-  
+
+  /**
+   * Set the sortables for moving contents through the webpage
+   * 
+   */
   public function setSortables()
   {
     $this->sortables = '';
   	$listOptions = '';
 
+    $i = 0;
+    $existingSlots = array();
     $slotContents = $this->getSlotContents($this->idLanguage, $this->idPage);
   	foreach ($slotContents as $slot)
     {
-      $listOptions .= sprintf('"%s",', $slot['slotName']);
+
+      // Retrieve the html tag when the id attribute is setted, otherwise no sortable is created
+      preg_match_all(sprintf('/\<([a-z0-9]*)\s*.*?id\s*=\s*["|\']%s["|\'].*?\>/', $slot['slotName']) , $this->pageContents, $res);
+      if(count($res[1]) > 0)
+      {
+        $listOptions .= sprintf('"%s",', $slot['slotName']);
+        $existingSlots[] = array('id' => $slot['idSlot'], 'name' => $slot['slotName'], 'tag' => $res[1][0]);
+      }
     }
     $listOptions = sprintf('dropOnEmpty:true,containment:[%s],constraint:false,', substr($listOptions, 0, strlen($listOptions)-1));
-    
-    foreach ($slotContents as $slot)
-    { 
-    	$function = sprintf("onUpdate:function(){W3sContent.moveContents('%1\$s', '%2\$s', Sortable.serialize('%2\$s'))}", $slot['idSlot'], $slot['slotName']);
-			$this->sortables .= sprintf('Sortable.create(\'%s\', {%s %s, tag:\'div\'});', $slot['slotName'], $listOptions, $function);
+
+    foreach ($existingSlots as $slot)
+    {
+    	$function = sprintf("onUpdate:function(){W3sContent.moveContents('%1\$s', '%2\$s', Sortable.serialize('%2\$s'))}", $slot['id'], $slot['name']);
+			$this->sortables .= sprintf('Sortable.create(\'%s\', {%s %s, tag:\'%s\'});' . "\n", $slot['name'], $listOptions, $function, $slot['tag']);
     }
   }
  
