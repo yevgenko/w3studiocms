@@ -49,9 +49,9 @@ class BaseW3sWebSiteActions extends sfActions
   	{
   		$message = null;
   	}  	
-  	
-    //$this->forward404If($this->template->getIdLanguage() == -1 || $this->template->getIdPage() == -1, $message);
-    
+
+    $this->forward404If($this->template->getIdLanguage() == -1 || $this->template->getIdPage() == -1, $message);
+
     $this->includeFiles($this->template->getJavascripts());
     $this->includeFiles($this->template->getStylesheets());		
 
