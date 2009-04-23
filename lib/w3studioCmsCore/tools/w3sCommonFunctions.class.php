@@ -608,7 +608,7 @@ class w3sCommonFunctions
    * @return string Filename or absolute path, depend on current location
    */
   public static function getStdBasename($fullPath, $baseDir)
-  {
+  { 
     $basename = basename($fullPath);
     $stdPath = w3sCommonFunctions::checkLastDirSeparator(sfConfig::get('sf_web_dir').$baseDir) . $basename;
 

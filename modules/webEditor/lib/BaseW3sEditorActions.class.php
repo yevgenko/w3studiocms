@@ -146,7 +146,7 @@ class BaseW3sEditorActions extends sfActions
       $content = W3sContentPeer::retrieveByPk($this->getRequestParameter('idContent'));
       if ($content != null)
       {
-	      $this->editor = w3sEditorFactory::create($content);
+        $this->editor = w3sEditorFactory::create($content);
 	      return $this->renderPartial('showEditor');
       }      
     }

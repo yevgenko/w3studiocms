@@ -113,7 +113,8 @@ class w3sImage{
    */ 
   protected function imageFromFile($fileName)
   {
-    if (!is_file($fileName)){
+    if (!is_file($fileName))
+    {
       throw new RuntimeException(sprintf('%s is not a valid file.', $fileName)); 
     }    
     $this->attributes["fullImagePath"] = $fileName;

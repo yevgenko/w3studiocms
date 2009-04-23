@@ -168,70 +168,80 @@ class w3sThemeImport implements w3sEditor
   }
 
  /**
-  * Adds the theme to database after it has been loaded to make it available to be used
+  * Adds the theme to database after it has been loaded and makes it available
+  * to be used.
   *
-  * @author     Giansimon Diblas  <giansimon.diblas@w3studiocms.com>
   *
-  * @return Bool - True: success - False: failure
+  * @return Bool -  0: Failure
+  *                 1: Success
+  *                 2: Template folder does not exists
   *
   */
   public function add($themeName)
   {
-    $bRollBack = false;
-    $con = Propel::getConnection();
-    $con = w3sPropelWorkaround::beginTransaction($con);
-
-    $theme = new W3sProject();
-    $theme->setProjectName($themeName);
-    $result = $theme->save();
-    if ($theme->isModified() && $result == 0) $bRollBack = true;
-
-    if (!$bRollBack)
+    if (is_dir(sfConfig::get('app_w3s_web_themes_dir') . DIRECTORY_SEPARATOR . $themeName))
     {
-	    $idTheme = $theme->getId();
-	    $templates = $this->scanTheme($themeName);
-	   	foreach ($templates as $templateName)
-	   	{
-	    	$template = new W3sTemplate;
-	      $template->setProjectId($idTheme);
-	      $template->setTemplateName($templateName);
-	      $result = $template->save();
-	      if ($template->isModified() && $result == 0)
-	      {
-	        $bRollBack = true;
-	        break;
-	      }
+      $bRollBack = false;
+      $con = Propel::getConnection();
+      $con = w3sPropelWorkaround::beginTransaction($con);
 
-	      if (!$bRollBack)
-    		{
-		      $idTemplate = $template->getId();
-		      $slots = $this->getSlotsFromTemplate($themeName, $templateName);
-		      foreach($slots as $slotName)
-		      {
-		      	$slot = new W3sSlot;
-			      $slot->setTemplateId($idTemplate);
-			      $slot->setSlotName($slotName);
-			      $result = $slot->save();
-			      if ($slot->isModified() && $result == 0)
-			      {
-			        $bRollBack = true;
-			        break;
-			      }
-		      }
-    		}
-	   	}
-    }
+      $theme = new W3sProject();
+      $theme->setProjectName($themeName);
+      $result = $theme->save();
+      if ($theme->isModified() && $result == 0) $bRollBack = true;
 
-    if (!$bRollBack)
-    { // Everything was fine so W3StudioCMS commits to database
-      $con->commit();
-      $result = true;
+      if (!$bRollBack)
+      {
+        $idTheme = $theme->getId();
+        $templates = $this->scanTheme($themeName);
+        foreach ($templates as $templateName)
+        {
+          $template = new W3sTemplate;
+          $template->setProjectId($idTheme);
+          $template->setTemplateName($templateName);
+          $result = $template->save();
+          if ($template->isModified() && $result == 0)
+          {
+            $bRollBack = true;
+            break;
+          }
+
+          if (!$bRollBack)
+          {
+            $idTemplate = $template->getId();
+            $slots = $this->getSlotsFromTemplate($themeName, $templateName);
+            foreach($slots as $slotName)
+            {
+              $slot = new W3sSlot;
+              $slot->setTemplateId($idTemplate);
+              $slot->setSlotName($slotName);
+              $result = $slot->save();
+              if ($slot->isModified() && $result == 0)
+              {
+                $bRollBack = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      if (!$bRollBack)
+      { // Everything was fine so W3StudioCMS commits to database
+        $con->commit();
+        $result = 1;
+      }
+      else
+      { // Something was wrong so W3StudioCMS aborts the operation and restores to previous status
+        w3sPropelWorkaround::rollBack($con);
+        $result = 0;
+      }
     }
     else
-    { // Something was wrong so W3StudioCMS aborts the operation and restores to previous status
-      w3sPropelWorkaround::rollBack($con);
-      $result = false;
+    {
+      return 2;
     }
+
 
     return $result;
   }
