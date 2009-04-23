@@ -53,7 +53,7 @@ class w3sContentManagerScript extends w3sContentManager{
    */ 
   public function getDisplayContentForPreviewMode()
   {
-  	$content = $this->content->getContent();
+  	$content = stripslashes($this->content->getContent());
   	if (strpos($content, '<?php') !== false){
       $file = sprintf('%s/tmpslot_%sphp', sfConfig::get('app_w3s_web_themes_dir'), sfContext::getInstance()->getUser()->getGuardUser()->getId());
       $fp = fopen ($file, "w");
@@ -67,5 +67,29 @@ class w3sContentManagerScript extends w3sContentManager{
     }     
     
     return $content;      
+  }
+
+ /**
+  * Strip slashes before publishing content.
+  *
+  * @see w3sContentManager::getDisplayContentForPublishMode()
+  */
+  public function getDisplayContentForPublishMode()
+  {
+    return stripslashes(parent::getDisplayContentForPublishMode());
+  }
+
+ /**
+  * Add backslash character (\) before every character that is among these:
+  *
+  *   . \ + * ? [ ^ ] ( $ )
+  *
+  * @see w3sContentManager::formatContent()
+  */
+  protected function formatContent($contentValues)
+  {
+    $contentValues['Content'] = quotemeta($contentValues['Content']);
+
+    return $contentValues;
   }
 }

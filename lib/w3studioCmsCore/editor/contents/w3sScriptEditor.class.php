@@ -43,7 +43,7 @@ class w3sScriptEditor extends w3sContentsEditor
    */   	
 	public function drawEditor()
 	{			
-		$form = new w3sScriptForm($this->content->getContent());
+		$form = new w3sScriptForm(stripslashes($this->content->getContent()));
 		
     return sprintf($this->editorSkeleton, $form['script']->renderRow(array('cols' => 71, 'rows' => 20)),
 																					sfContext::getInstance()->getI18N()->__('Insert script'));		     
