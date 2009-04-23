@@ -13,4 +13,4 @@
  */
  	use_helper('I18N', 'Javascript', 'Object');
 	
-	echo $metatagManager->render();
+	echo $metatagManager->render(ESC_RAW);

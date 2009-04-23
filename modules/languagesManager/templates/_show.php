@@ -13,4 +13,4 @@
  */
  use_helper('I18N', 'Javascript', 'Object');
  
- echo $languagesEditor->render();
+ echo $languagesEditor->render(ESC_RAW);

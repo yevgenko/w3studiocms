@@ -14,4 +14,4 @@
   
   use_helper('I18N', 'Javascript', 'Object');
   
-  echo $pageEditor->render();
+  echo $pageEditor->render(ESC_RAW);

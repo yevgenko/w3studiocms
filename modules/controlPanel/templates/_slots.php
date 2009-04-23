@@ -13,4 +13,4 @@
  */
   use_helper('I18N', 'Javascript');
 	
-	echo $slotManager->render();
+	echo $slotManager->render(ESC_RAW);

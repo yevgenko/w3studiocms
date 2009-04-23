@@ -18,7 +18,7 @@
   if ($result != 1)
   { 
   	$pageEditor = new w3sPageEditor();
-  	echo $pageEditor->render();
+  	echo $pageEditor->render(ESC_RAW);
   }      
 
   // Result messages

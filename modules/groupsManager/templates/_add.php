@@ -18,7 +18,7 @@
   if ($result != 1)
   { 
   	$groupEditor = new w3sGroupEditor();
-  	echo $groupEditor->render();
+  	echo $groupEditor->render(ESC_RAW);
   }      
 
   // Result messages

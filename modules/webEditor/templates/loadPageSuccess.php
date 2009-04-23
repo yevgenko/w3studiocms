@@ -17,8 +17,8 @@
   switch ($status)
   {
   	case 1:
-		  echo $template->renderPage();
-		  echo javascript_tag(sprintf('%s;InteractiveMenu = null; InteractiveMenu = new interactiveMenu(\'%s\');InteractiveMenu.setEvents();', $template->getSortables(), $template->getInteractiveMenuEvents())); 
+		  echo $template->renderPage(ESC_RAW);
+		  echo javascript_tag(sprintf('%s;InteractiveMenu = null; InteractiveMenu = new interactiveMenu(\'%s\');InteractiveMenu.setEvents();', $template->getSortables(ESC_RAW), $template->getInteractiveMenuEvents(ESC_RAW))); 
   		break;
 	  case 2:
       $message = __('Your session has been expired: you must login again.');      

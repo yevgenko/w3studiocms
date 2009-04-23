@@ -13,4 +13,4 @@
  */
   use_helper('I18N', 'Javascript');
   
-  echo $theme->render();
+  echo $theme->render(ESC_RAW);

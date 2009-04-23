@@ -14,4 +14,4 @@
 
  	use_helper('I18N', 'Javascript', 'Object');
 	
-	echo $controlPanel->render();
+	echo $controlPanel->render(ESC_RAW);

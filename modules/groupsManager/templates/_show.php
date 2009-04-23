@@ -14,4 +14,4 @@
 
   use_helper('I18N', 'Javascript', 'Object');
   
-  echo $groupEditor->render();
+  echo $groupEditor->render(ESC_RAW);

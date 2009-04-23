@@ -27,17 +27,17 @@ switch (sfConfig::get('app_webeditor')){
 // Set the javascripts variables needed for managing languages and pages.
 $frontController = (sfConfig::get('sf_environment') != 'prod') ? sprintf('/%s_%s.php/', sfConfig::get('sf_app'),  sfConfig::get('sf_environment')) : '/';
 
-echo $template->retrieveSiteStylesheets();
+echo $template->retrieveSiteStylesheets(ESC_RAW);
 ?>
 <div id="w3s_cms"></div>
 <div id="w3s_menu_manager_hidden"></div>
 
 
 <?php 
-	echo $managerMenu->renderMenuManager('full');
-	echo $interactiveMenu->renderMenu();
-  echo $commands->renderMenu();
-  echo $actions->renderMenu();
+	echo $managerMenu->renderMenuManager('full', ESC_RAW);
+	echo $interactiveMenu->renderMenu(ESC_RAW);
+  echo $commands->renderMenu(ESC_RAW);
+  echo $actions->renderMenu(ESC_RAW);
  
   echo javascript_tag('function initW3studioCMS() { w3studioCMS = new W3studioCMS(\'' . $frontController . '\', ' . $template->getIdPage() . ', ' . $template->getIdLanguage() . '); }
 											 Event.observe(window, \'load\', initW3studioCMS, false);');  

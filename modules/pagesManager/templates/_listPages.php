@@ -13,4 +13,4 @@
  */
 	use_helper('I18N', 'Object', 'Javascript');
 	
-  echo $fileManager->renderPages();
+  echo $fileManager->renderPages(ESC_RAW);

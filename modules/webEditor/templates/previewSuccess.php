@@ -17,7 +17,7 @@
   switch ($status)
   {
   	case 1:
-		  echo $template->renderPage();
+		  echo $template->renderPage(ESC_RAW);
   		break;
 	  case 2:
       $message = __('Your session has been expired: you must login again.');      

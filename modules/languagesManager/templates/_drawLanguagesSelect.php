@@ -13,4 +13,4 @@
  */
   use_helper('Object');
 
-  echo $controlPanel->drawLanguagesSelect();  
+  echo $controlPanel->drawLanguagesSelect(ESC_RAW);

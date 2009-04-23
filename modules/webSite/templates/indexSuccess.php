@@ -16,4 +16,4 @@
   use_helper('I18N', 'Javascript');
 
   echo $conditionalStylesheets;
-	echo $template->renderPage();
+	echo $template->renderPage(ESC_RAW);

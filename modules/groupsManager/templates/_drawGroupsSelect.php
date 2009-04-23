@@ -13,4 +13,4 @@
  */
  use_helper('Object');
  
- echo $fileManager->renderGroupsSelect();
+ echo $fileManager->renderGroupsSelect(ESC_RAW);

@@ -15,7 +15,7 @@
   use_helper('I18N', 'Object', 'Javascript');
 
   // If something failed W3StudioCMS shows the add/edit module again
-  if ($result != 1) echo $groupEditor->render();
+  if ($result != 1) echo $groupEditor->render(ESC_RAW);
 
   // Result messages
   $type = 'error';
