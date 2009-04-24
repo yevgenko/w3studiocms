@@ -29,4 +29,4 @@ switch($result)
     break;
 }
 
-echo w3sCommonFunctions::displayMessage($message, $type, $closeLink);  
+echo w3sCommonFunctions::displayMessage($message, $type, $closeLink, ESC_RAW);  
