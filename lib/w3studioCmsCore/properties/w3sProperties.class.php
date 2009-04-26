@@ -88,42 +88,52 @@ class w3sProperties
    * @return string
    *
    */ 	
-	public function render(){
+	public function render()
+  {
 		$button = '';
     $options = '';
 		$result = sprintf('<tr><td colspan="2" class="header">%s</td></tr>', sfContext::getInstance()->getI18N()->__('Properties'));
-    
-    $properties = new w3sPropertyForm($this->params);
-    foreach($this->params as $formRow){ 
-      if(empty($formRow["button_for"])){
-        $currentOptions = isset($formRow["options"]) ? $formRow["options"] : array();
-        
-        // Manages the select type, because that widget hasn't the type attribute
-        $type = (isset($formRow["type"])) ? $formRow["type"] : '';
-        
-        if ($type != 'hidden') 
-        {
-          // Renders all types instead the hidden type
-          $result .= sprintf('<tr><th>%s</th><td>%s%s</td></tr>', $properties[$formRow["name"]]->renderLabel(), 
-          																												$properties[$formRow["name"]]->render($currentOptions), 
-          																												($button != '') ? $properties[$button]->render($options) : ''); 
-        }
-        else 									 
-        {
-          // Renders the hidden type
-          $result .= $properties[$formRow["name"]]->render($currentOptions);
-        }
-        $button = '';
-      }
-      else
+
+    if ($this->params != null && count($this->params) > 0)
+    {
+      $properties = new w3sPropertyForm($this->params);
+      foreach($this->params as $formRow)
       {
-        
-        // The button will be rendered for the next control
-        $button = $formRow["name"];
-        $options = $formRow["options"];
+        if(empty($formRow["button_for"]))
+        {
+          $currentOptions = isset($formRow["options"]) ? $formRow["options"] : array();
+
+          // Manages the select type, because that widget hasn't the type attribute
+          $type = (isset($formRow["type"])) ? $formRow["type"] : '';
+
+          if ($type != 'hidden')
+          {
+            // Renders all types instead the hidden type
+            $result .= sprintf('<tr><th>%s</th><td>%s%s</td></tr>', $properties[$formRow["name"]]->renderLabel(),
+                                                                    $properties[$formRow["name"]]->render($currentOptions),
+                                                                    ($button != '') ? $properties[$button]->render($options) : '');
+          }
+          else
+          {
+            // Renders the hidden type
+            $result .= $properties[$formRow["name"]]->render($currentOptions);
+          }
+          $button = '';
+        }
+        else
+        {
+
+          // The button will be rendered for the next control
+          $button = $formRow["name"];
+          $options = $formRow["options"];
+        }
       }
+
+      return sprintf('<div id="%s"><form id="%s"><table cellspacing="0">%s</table></form></div>', $this->divName, $this->formName, $result);
     }
-    
-    return sprintf('<div id="%s"><form id="%s"><table cellspacing="0">%s</table></form></div>', $this->divName, $this->formName, $result);
+    else
+    {
+      return 'Nothing to render when the array with parameters is empty';
+    }
 	}
 }

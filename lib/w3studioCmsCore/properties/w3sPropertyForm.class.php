@@ -44,8 +44,9 @@
 	   * 								This behaviour will be reviewed.
 	   *   options      The options for the form's widget type   
 	   */   
-    public function __construct($arrayForm){ 
-      $this->myForm = $arrayForm; 
+    public function __construct($arrayForm)
+    {
+      $this->myForm = ($arrayForm != null) ? $arrayForm : array();
       
       parent::__construct();
     }
@@ -54,37 +55,47 @@
 	   * Configure the property form.
 	   *    
 	   */   
-    public function configure(){    
+    public function configure()
+    {
+      
       $widgets = array();
       $labels = array();
-      $defaults = array();  
-      foreach ($this->myForm as $formRow){ 
-        
-        if (isset($formRow["type"])){
-          switch ($formRow["type"]){
-            case 'hidden': 
-              $widgets[$formRow["name"]] = new sfWidgetFormInputHidden(array('type' => $formRow["type"]), isset($formRow["options"]) ? $formRow["options"] : array());
-              break;  
-            default: 
-              $widgets[$formRow["name"]] = new sfWidgetFormInput(array('type' => $formRow["type"]), isset($formRow["options"]) ? $formRow["options"] : array());
-              break;
+      $defaults = array();
+      if ($this->myForm != null)
+      {
+        foreach ($this->myForm as $formRow)
+        {
+          if (isset($formRow["choices"]))
+          {
+            $widgets[$formRow["name"]] = new sfWidgetFormSelect(array('choices' => $formRow["choices"]));
           }
-        }  
-        else if (isset($formRow["choices"])){
-          $widgets[$formRow["name"]] = new sfWidgetFormSelect(array('choices' => $formRow["choices"]));  
-        }  
-        
-        if (isset($formRow["label"])){
-          $labels[$formRow["name"]] = $formRow["label"];  
-        }  
-        
-        if (isset($formRow["default"])){
-          $defaults[$formRow["name"]] = $formRow["default"];  
+          else
+          {
+            switch ($formRow["type"])
+            {
+              case 'hidden':
+                $widgets[$formRow["name"]] = new sfWidgetFormInputHidden(array('type' => $formRow["type"]), isset($formRow["options"]) ? $formRow["options"] : array());
+                break;
+              default:
+                $widgets[$formRow["name"]] = new sfWidgetFormInput(array('type' => $formRow["type"]), isset($formRow["options"]) ? $formRow["options"] : array());
+                break;
+            }
+          }
+
+          if (isset($formRow["label"]))
+          {
+            $labels[$formRow["name"]] = $formRow["label"];
+          }
+
+          if (isset($formRow["default"]))
+          {
+            $defaults[$formRow["name"]] = $formRow["default"];
+          }
         }
+
+        $this->widgetSchema = new sfWidgetFormSchema($widgets);
+        $this->widgetSchema->setLabels($labels);
+        $this->setDefaults($defaults);
       }
-      
-      $this->widgetSchema = new sfWidgetFormSchema($widgets);
-      $this->widgetSchema->setLabels($labels);
-      $this->setDefaults($defaults);
     }
   }
