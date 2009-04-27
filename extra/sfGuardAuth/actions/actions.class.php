@@ -1,6 +1,6 @@
 <?php
-
-require_once(sfConfig::get('sf_plugins_dir').'/sfGuardPlugin/modules/sfGuardAuth/lib/BasesfGuardAuthActions.class.php');
+//echo realpath(dirname(__FILE__).'/../../../../');
+require_once(dirname(__FILE__).'/../../../../sfGuardPlugin/modules/sfGuardAuth/lib/BasesfGuardAuthActions.class.php');
 
 class sfGuardAuthActions extends BasesfGuardAuthActions
 {
