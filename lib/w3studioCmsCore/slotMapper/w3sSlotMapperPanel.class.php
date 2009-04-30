@@ -43,8 +43,8 @@ class w3sSlotMapperPanel implements w3sEditor
      '<div id="%s" class="%s">
         <div style="float:left;">
         %s
-        <input id="w3s_sm_source" name="w3s_sm_source[]" value="%s" type="text" />
-        <input id="w3s_sm_dest" name="w3s_sm_dest[]" value="%s" type="text" />
+        <input id="w3s_sm_source" name="w3s_sm_source[]" value="%s" type="hidden" />
+        <input id="w3s_sm_dest" name="w3s_sm_dest[]" value="%s" type="hidden" />
         </div>
         <div style="float:right;">%s</div>
       </div>',

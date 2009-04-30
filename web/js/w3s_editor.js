@@ -141,9 +141,11 @@ var imageEditor = Class.create(editor, {
 	    ImageManager = new imageManager(); 
 	    W3sTools.bOpenFileUploader = W3sTools.openFileUploader.bind(W3sTools, 1); 
 	    //$('w3s_btn_close').observe('click', currentEditor.close);	
-	    $('w3s_file_uploader_btn').observe('click', W3sTools.bOpenFileUploader);
+	    /*
+      $('w3s_file_uploader_btn').observe('click', W3sTools.bOpenFileUploader);
 	    $('w3s_delete_image_btn').observe('click', ImageManager.deleteSelectedImage);
 	    $('w3s_insert_image_btn').observe('click', this.insertImage);
+      */
 	  		    
 	    return false;  
 	},

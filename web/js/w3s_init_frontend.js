@@ -60,8 +60,8 @@ function doLogin(sActionPath, sPageUrl)
                              '&page=' + page +
                              '&signin[lang]=' + language +
                              '&signin[page]=' + page +
-                             '&signin[username]=' + $('signin_username').value +
-                             '&signin[password]=' + $('signin_password').value};
+                             '&signin[username]=' + encodeURIComponent($('signin_username').value) +
+                             '&signin[password]=' + encodeURIComponent($('signin_password').value)};
   curWindow.setAjaxContent(sActionPath, sAjaxOptions);
   
   return false;

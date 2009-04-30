@@ -92,13 +92,13 @@ var w3sSlotMapper = Class.create({
       var objSourceInput = document.createElement("input");
       objSourceInput.setAttribute('id', 'w3s_sm_source');
       objSourceInput.setAttribute('name', 'w3s_sm_source[]');
-      //objSourceInput.setAttribute('type', 'hidden');
+      objSourceInput.setAttribute('type', 'hidden');
       objSourceInput.setAttribute('value',  source);
 
       var objDestInput = document.createElement("input");
       objDestInput.setAttribute('id', 'w3s_sm_dest');
       objDestInput.setAttribute('name', 'w3s_sm_dest[]');
-      //objDestInput.setAttribute('type', 'hidden');
+      objDestInput.setAttribute('type', 'hidden');
       objDestInput.setAttribute('value',  dest);
 
       var objRowDiv = document.createElement("div");
