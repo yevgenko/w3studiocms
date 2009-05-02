@@ -345,12 +345,15 @@ class w3sCommonFunctions
   public static function extractZipFile($zipFile, $destinationPath)
   {
     $zip = new ZipArchive;
-    if ($zip->open($zipFile) === TRUE) {
-      $result = $zip->extractTo($destinationPath); 
+    if ($zip->open($zipFile) === TRUE)
+    { 
+      $result = $zip->extractTo($destinationPath);
       $zip->close();
             
       return $result;
-    } else {
+    } 
+    else
+    {
       return 0;
     }
   }

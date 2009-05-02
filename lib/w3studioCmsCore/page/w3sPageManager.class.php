@@ -138,15 +138,15 @@ class w3sPageManager
                       }
                       else
                       { 
-                        // Retrive base page, if any, but NOT current one
-                        $pageFinder = DbFinder::from('W3sPage')->whereToDelete(0)->whereIdNot($idPage);
+                        // Retrive base page, if any, but NOT current one.
+                        $pageFinder = DbFinder::from('W3sPage')->whereToDelete(0)->
+                          whereIdNot($idPage)->whereGroupId($idGroup);
                         if ($basePage = $pageFinder->findOne())
                         {
                           // Retrieve a content that belongs to the current slot
                           $baseContents = DbFinder::from('W3sContent')->whereToDelete(0)->
                             relatedTo($basePage)->relatedTo($slot)->
                             whereLanguageId($idLanguage)->find();
-
                           foreach ($baseContents as $baseContent)
                           {
                             // Creates a new content from the base content
@@ -159,7 +159,7 @@ class w3sPageManager
 
                             // Updates the content and copies the related elements
                             $newContent->setUpdateForeigns(false);
-                            $newContent->add($contentValue);
+                            echo $newContent->add($contentValue) . "<br>";
                             w3sContentManagerMenuPeer::copyRelatedElements($baseContent->getId(), $newContent->getContent()->getId());
                           }
                         }

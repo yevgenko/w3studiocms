@@ -21,7 +21,7 @@
 	    echo sprintf('<p class="error_message_10">%s</p>', $message);
 	    break;
 	  case 1:      
-      echo $menuEditor->drawMenuItems();
+      echo $menuEditor->drawMenuItems(ESC_RAW);
       echo javascript_tag($menuEditor->getJsMenu());
 	    break;      
 	}
