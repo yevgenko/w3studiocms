@@ -159,7 +159,7 @@ class w3sPageManager
 
                             // Updates the content and copies the related elements
                             $newContent->setUpdateForeigns(false);
-                            echo $newContent->add($contentValue) . "<br>";
+                            $newContent->add($contentValue);
                             w3sContentManagerMenuPeer::copyRelatedElements($baseContent->getId(), $newContent->getContent()->getId());
                           }
                         }
