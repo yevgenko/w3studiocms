@@ -1,4 +1,4 @@
 <?php
   use_helper('Javascript');
 
-  echo $slotMapperPanel->render();
+  echo $slotMapperPanel->render(ESC_RAW);

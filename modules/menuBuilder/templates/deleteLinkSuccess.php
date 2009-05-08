@@ -15,4 +15,4 @@
   use_helper('I18N', 'Javascript');
 
 	echo $menuEditor->drawMenuItems(ESC_RAW);
-	echo javascript_tag($menuEditor->getJsMenu());
+	echo javascript_tag($menuEditor->getJsMenu(ESC_RAW));

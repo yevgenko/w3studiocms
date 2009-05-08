@@ -289,8 +289,8 @@ propel:
       type: INTEGER
       required: true
       default: 0
-      foreignTable: sf_guard_user
-      foreignReference: id
+      #foreignTable: sf_guard_user
+      #foreignReference: id
       primaryKey: true
     operation: 
       type: VARCHAR
@@ -369,27 +369,27 @@ propel:
     _uniques: 
       id_template: 
         - id
-  w3s_module: 
-    _attributes: 
-      idMethod: native
-    id: 
-      type: INTEGER
-      required: true
-      autoIncrement: true
-      primaryKey: true
-    page_id: 
-      type: INTEGER
-      required: true
-      foreignTable: w3s_page
-      foreignReference: id
-      onDelete: CASCADE
-    module_name: 
-      type: VARCHAR
-      size: 255
-      required: true
-    to_delete:
-      type: INTEGER
-      required: true
-    _indexes: 
-      I_PAGE: 
-        - page_id
+  #w3s_module:
+  #  _attributes:
+  #    idMethod: native
+  #  id:
+  #    type: INTEGER
+ #     required: true
+ #     autoIncrement: true
+  #    primaryKey: true
+  #  page_id:
+  #    type: INTEGER
+  #    required: true
+  ##    foreignTable: w3s_page
+  #    foreignReference: id
+  #    onDelete: CASCADE
+  #  module_name:
+  #    type: VARCHAR
+  ##    size: 255
+  #    required: true
+  #  to_delete:
+  #    type: INTEGER
+  #    required: true
+  #  _indexes:
+  #    I_PAGE:
+   #     - page_id

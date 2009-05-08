@@ -18,7 +18,7 @@ class BaseW3sWebSiteActions extends sfActions
    * Draws the web page
    *
    */
-  public function executeIndex()
+  public function executeIndex(sfWebRequest $request)
   {
     $this->template = new w3sTemplateEngineFrontend($this->getRequestParameter('lang'), $this->getRequestParameter('page'));
     $styles = $this->template->retrieveTemplateStylesheets($this->template->getPageContents());
@@ -71,6 +71,11 @@ class BaseW3sWebSiteActions extends sfActions
       'description',
       ($oMetatag != null) ? $oMetatag->getMetaDescription() : sfConfig::get('app_w3s_meta_description', '')
     );
+  }
+
+  public function executeInstallComplete(sfWebRequest $request)
+  {
+    return $this->renderPartial('install/results', array('form' => null, 'result' => '1'));
   }
   
   /**

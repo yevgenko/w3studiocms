@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__).'/../../../../sfGuardPlugin/modules/sfGuardAuth/lib/BasesfGuardAuthActions.class.php');
+require_once(dirname(__FILE__).'/../../../../../plugins/sfGuardPlugin/modules/sfGuardAuth/lib/BasesfGuardAuthActions.class.php');
 
 class sfGuardAuthActions extends BasesfGuardAuthActions
 {

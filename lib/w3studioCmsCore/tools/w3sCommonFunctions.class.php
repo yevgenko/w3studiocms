@@ -391,11 +391,56 @@ class w3sCommonFunctions
    */
   public static function writeFileContents($filename, $contents)
   {
-    $fp = fopen ($filename, "w");
-	  fwrite($fp, $contents);
-	  fclose($fp);
+    $result = false;
+    $fp = @fopen ($filename, "w");
+    if ($fp != null)
+    { 
+      fwrite($fp, $contents);
+      fclose($fp);
+
+      $result = true;
+    }
+
+    return $result;
   }
-  
+
+  public static function checkFolderWritable($filename)
+  {
+    $result = self::writeFileContents($filename, '');
+    if ($result) unlink($filename);
+
+    return $result;
+  }
+
+  public static function copyDirectory($sourceDir, $destDir, $ignore=array())
+  {
+    if(!is_dir($destDir)) mkdir($destDir);
+    if ($handle = opendir($sourceDir))
+    {
+      while (false !== ($file = readdir($handle)))
+      {
+        if ($file != '.' && $file != '..')
+        {
+          $curSource = $sourceDir . '/' . $file;
+          $curDest = $destDir . '/' . $file;
+          if (is_dir($curSource))
+          {
+            if (!in_array($file, $ignore))
+            {
+              if(!is_dir($curDest)) mkdir($curDest);
+              self::copyDirectory($curSource, $curDest, $ignore);
+            }
+          }
+          else
+          {
+            copy ($curSource, $curDest);
+          }
+        }
+      }
+    }
+    closedir($handle);
+  }
+
   /**
    * Deletes all files and directories stored in a given directory.
    * At last deletes the source directory

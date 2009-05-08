@@ -12,20 +12,11 @@
  * For extra documentation and help please visit http://www.w3studiocms.com
  */
 
-  use_helper('I18N', 'Javascript');
-  
-  /**/
-  switch ($status)
-  {
-  	case 1:
-		  echo $template->renderPage(ESC_RAW);
-  		break;
-	  case 2:
-      $message = __('The template cannot be rendered because a required parameter misses.');
-      echo w3sCommonFunctions::displayMessage($message);      
-      break;
-    case 4:
-      $message = __('Your session has been expired: you must login again.');
-      echo w3sCommonFunctions::displayMessage($message);      
-      break;
-  }
+  use_helper('I18N');
+ 
+  echo '<form action="' . url_for('install/install') . '" method="post" >' .
+       '<table>'
+          . $form
+          . sprintf('<tr><td></td><td><input type="submit" value="%s"/></td></tr>', __('Install W3studioCMS')) .
+       '</table>' .
+       '</form>';

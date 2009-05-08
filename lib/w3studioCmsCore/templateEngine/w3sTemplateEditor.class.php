@@ -47,7 +47,7 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
     $slotNames = '';
     if ($this->idLanguage != -1 && $this->idPage != -1)
     {
-      $slotContents = $this->getSlotContents($this->idLanguage, $this->idPage);
+      $slotContents = $this->getSlotContents($this->idLanguage, $this->idPage);      
       foreach ($slotContents as $slot)
       {
         $slotNames .= sprintf('"%s",', $slot['slotName']);
@@ -79,13 +79,16 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
     $this->sortables = '';
   	$listOptions = '';
 
+    if ($this->pageContents == '')
+    {
+      $this->setTemplateInfo($this->idPage);
+    }
+    
     $i = 0;
     $existingSlots = array();
     $slotContents = $this->getSlotContents($this->idLanguage, $this->idPage);
   	foreach ($slotContents as $slot)
     {
-
-      // Retrieve the html tag when the id attribute is setted, otherwise no sortable is created
       preg_match_all(sprintf('/\<([a-z0-9]*)\s*.*?id\s*=\s*["|\']%s["|\'].*?\>/', $slot['slotName']) , $this->pageContents, $res);
       if(count($res[1]) > 0)
       {

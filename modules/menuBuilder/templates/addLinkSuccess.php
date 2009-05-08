@@ -22,6 +22,6 @@
 	    break;
 	  case 1:      
       echo $menuEditor->drawMenuItems(ESC_RAW);
-      echo javascript_tag($menuEditor->getJsMenu());
+      echo javascript_tag($menuEditor->getJsMenu(ESC_RAW));
 	    break;      
 	}
