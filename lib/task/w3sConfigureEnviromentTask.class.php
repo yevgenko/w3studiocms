@@ -57,9 +57,10 @@ EOF;
 
     if (!is_dir($themesDir))
     {
-      $filesystem->symlink($w3sDir . 'themes', $themesDir, true);
+      mkdir($themesDir);
+      w3sCommonFunctions::copyDirectory($w3sExtraDir . 'themes' . DIRECTORY_SEPARATOR . 'w3sJet30Theme', $themesDir . DIRECTORY_SEPARATOR . 'w3sJet30Theme');
 
-      w3sCommonFunctions::copyDirectory($w3sExtraDir . 'standardThemeImages', sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'assets');
+      w3sCommonFunctions::copyDirectory($w3sExtraDir . 'themes' . DIRECTORY_SEPARATOR . 'standardThemeImages', sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'assets');
       $this->logSection('W3studioCMS', 'Standard theme has been installed');
     }
     else
@@ -68,17 +69,8 @@ EOF;
     }
 
     if (!is_dir($publishedDir)){
-      $filesystem->symlink($w3sDir . 'published', $publishedDir, true);
-      $res = @chmod($w3sDir . 'published', 0777);
-      
-      if ($res)
-      {
-        $this->logSection('W3studioCMS', 'Published folder has been initiated.');
-      }
-      else
-      {
-        $this->logSection('Warning', 'Cannot change permissions to ' . $w3sDir . 'published' .' folder. This folder must have 0777 permissions. Change them as root.', null, 'ERROR');
-      }
+      mkdir($publishedDir);
+      w3sCommonFunctions::copyDirectory($w3sExtraDir . 'published', $publishedDir);      
     }
     else
     {

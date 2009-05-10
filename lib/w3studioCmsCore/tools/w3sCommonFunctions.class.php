@@ -433,7 +433,7 @@ class w3sCommonFunctions
           }
           else
           {
-            copy ($curSource, $curDest);
+            if(!file_exists($curDestcopy)) copy($curSource, $curDest);
           }
         }
       }
