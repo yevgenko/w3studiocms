@@ -33,12 +33,11 @@ class w3sImageEditor extends w3sContentsEditor
 		        <td colspan="2" align="left">%s</td>
 		      </tr>
 		      <tr>
-		        <td valign="top">%s</td>      
-		        <td valign="top">%s</td>
-		        <td valign="top">%s</td>
+		        <td valign="top" width="%s">%s</td>
+		        <td valign="top" align="right">%s</td>
 		        <input type="submit" id="w3s_uploader_support" onclick="ImageManager.refreshImagelist(); return false;" />
-		      </tr>          
-    	  <tbody>
+		      </tr>
+	  <tbody>
     	</table>',
     $previewSkeleton =            // Declares the skeleton to display the image preview  
      '<table cellspacing="0" cellpadding="0">
@@ -99,12 +98,12 @@ class w3sImageEditor extends w3sContentsEditor
    * 
    * @return string
    *
-   */ 
+   */
   public function drawEditor()
-  {    
-    return sprintf($this->editorSkeleton, $this->drawToolbar('tbImageManager.yml'), '', $this->drawImagesList(), $this->drawPreviewWindow(306, 278), $this->drawProperties());
+  {
+    return sprintf($this->editorSkeleton, $this->drawToolbar('tbImageManager.yml'), '', '80%', $this->drawPreviewWindow(306, 278), $this->drawProperties());
   }
-  
+
   /**
    * Draws a list of images
    * 
@@ -179,7 +178,7 @@ class w3sImageEditor extends w3sContentsEditor
         array('name' => 'w3s_ppt_imageType', 'type' => 'hidden', 'options' => array('value' => $this->attributes["imageType"]))
       );
     $properties = new w3sProperties($params);
-    
+
     return $properties->render();
   }
 }

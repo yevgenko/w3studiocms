@@ -82,7 +82,7 @@ var w3sTools = Class.create({
 	  
 	  var params = $A(arguments);
 	  var param = (params[0] != undefined) ? '?cfgFile='+params[0] : '';
-	  W3sWindow.openStandard("/js/fileUploader/fileuploader.php" + param, "", 670, 400);
+	  W3sWindow.openStandard("/sfMediaLibrary/choice/images_only/1" + param, "", 670, 400);
 	},
 	
 	/** 

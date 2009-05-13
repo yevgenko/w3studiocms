@@ -1,10 +1,10 @@
 /*
- * This file is part of the w3studioCMS package library and it is distributed 
- * under the LGPL LICENSE Version 2.1. To use this library you must leave 
+ * This file is part of the w3studioCMS package library and it is distributed
+ * under the LGPL LICENSE Version 2.1. To use this library you must leave
  * intact this copyright notice.
- *  
+ *
  * (c) 2007-2008 Giansimon Diblas <giansimon.diblas@w3studiocms.com>
- *  
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -33,7 +33,7 @@
 }
 
 #w3s_image_preview{
-  width:308px;
+  width:508px;
   height:280px;
   background-repeat:no-repeat;
   background-position:center center;
@@ -58,7 +58,7 @@
   width:200px;
   height:280px;
   margin-bottom:10px;
-  background-color:#FFFFFF;  
+  background-color:#FFFFFF;
   overflow:auto;
 }
 
