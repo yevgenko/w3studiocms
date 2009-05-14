@@ -93,6 +93,7 @@ class w3sTemplateEnginePublisher extends w3sTemplateEngine
 	    		foreach ($slotContents as $slot)
           {
 			      $contents = $this->drawSlot($slot);
+            $contents=str_replace("$", '\$', $contents);
             $pageContents = preg_replace('/\<\?php.*?include_slot\(\'' . $slot['slotName'] . '\'\).*?\?\>/', $contents, $pageContents);
 
             /*$pageContents = str_replace('<?php include_slot(\'' . $slot['slotName'] . '\')?>', $contents, $pageContents);*/

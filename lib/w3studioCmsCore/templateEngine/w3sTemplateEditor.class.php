@@ -52,7 +52,9 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
       {
         $slotNames .= sprintf('"%s",', $slot['slotName']);
         $contents = $this->drawSlot($slot);
-        $this->pageContents = preg_replace('/\<\?php.*?include_slot\(\'' . $slot['slotName'] . '\'\).*?\?\>/', $contents, $this->pageContents);
+        $contents=str_replace("$", '\$', $contents);
+         $this->pageContents = preg_replace('/\<\?php.*?include_slot\(\'' . $slot['slotName'] . '\'\).*?\?\>/', $contents, $this->pageContents);
+/*        $this->pageContents = str_replace('<?php include_slot(\'' . $slot['slotName'] . '\')?>', $contents, $this->pageContents); */
       }
 
       $this->setSortables($slotContents);
@@ -167,7 +169,6 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
         $result .= sprintf('<div style="padding:1px;" id="w3sContent_0' . $slot['idSlot'] . '"><img src="%s" style="border:0px;" onclick="InteractiveMenu.openActionsMenuForAddContent(this)" /></div>', sfConfig::get('app_w3s_web_skin_images_dir') . '/structural/button_add_content.gif');
 	    }
     }
-
     return $result;
   }
 }
