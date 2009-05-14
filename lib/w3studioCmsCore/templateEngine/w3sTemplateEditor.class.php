@@ -1,17 +1,17 @@
 <?php
 /*
- * This file is part of the w3studioCMS package library and it is distributed 
- * under the LGPL LICENSE Version 2.1. To use this library you must leave 
+ * This file is part of the w3studioCMS package library and it is distributed
+ * under the LGPL LICENSE Version 2.1. To use this library you must leave
  * intact this copyright notice.
- *  
+ *
  * (c) 2007-2008 Giansimon Diblas <giansimon.diblas@w3studiocms.com>
- *  
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
  * For extra documentation and help please visit http://www.w3studiocms.com
  */
- 
+
 /**
  * Template class represents the page's template.
  *
@@ -19,35 +19,35 @@
  * @subpackage w3sTemplateEngineEditor
  * @author     Giansimon Diblas <giansimon.diblas@w3studiocms.com>
  */
- 
+
 class w3sTemplateEngineEditor extends w3sTemplateEngine
-{  
-	protected 
+{
+	protected
 		$interactiveMenuEvents = '',
-		$sortables = '';							
-	
+		$sortables = '';
+
 	public function getInteractiveMenuEvents()
   {
-    return $this->interactiveMenuEvents;  
+    return $this->interactiveMenuEvents;
   }
-  
+
   public function getSortables()
   {
-    return $this->sortables;  
+    return $this->sortables;
   }
-  
+
   /**
    * Overrides the standard function
-   * 
-   * @return string  The rendered page 
    *
-   */ 
+   * @return string  The rendered page
+   *
+   */
   public function renderPage()
   {
     $slotNames = '';
     if ($this->idLanguage != -1 && $this->idPage != -1)
     {
-      $slotContents = $this->getSlotContents($this->idLanguage, $this->idPage);      
+      $slotContents = $this->getSlotContents($this->idLanguage, $this->idPage);
       foreach ($slotContents as $slot)
       {
         $slotNames .= sprintf('"%s",', $slot['slotName']);
@@ -61,18 +61,13 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
     {
       $this->pageContents = w3sCommonFunctions::displayMessage('The page or the language requested does not exist anymore in the website');
     }
-    
-    // Renders the W3StudioCMS Copyright button. Please do not remove, neither when
-    // you override this function. See the function to learn the best way to implement
-    // it in your web site. Thank you.
-    $this->pageContents = $this->renderCopyright($this->pageContents);
-    
+
     return $this->pageContents;
   }
 
   /**
    * Set the sortables for moving contents through the webpage
-   * 
+   *
    */
   public function setSortables()
   {
@@ -83,7 +78,7 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
     {
       $this->setTemplateInfo($this->idPage);
     }
-    
+
     $i = 0;
     $existingSlots = array();
     $slotContents = $this->getSlotContents($this->idLanguage, $this->idPage);
@@ -104,20 +99,20 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
 			$this->sortables .= sprintf('Sortable.create(\'%s\', {%s %s, tag:\'%s\'});' . "\n", $slot['name'], $listOptions, $function, $slot['tag']);
     }
   }
- 
-  /** 
-   * Draws the contents' slot when in editor contents. 
-   * 
+
+  /**
+   * Draws the contents' slot when in editor contents.
+   *
    * @param object   A slot object
-   * 
+   *
    * @return string  The contents that belong to slot formatted as string
-   * 
+   *
    */
   public function drawSlot($slot)
   {
 
     $result = '';
-   
+
     $validParam = true;
     $defaultParams = array('0' => 'contents', '1' => 'idSlot', '2' => 'slotName', '3' => 'isRepeated', '4' => 'setEventForRedraw');
     if (is_array($slot))
@@ -140,38 +135,38 @@ class w3sTemplateEngineEditor extends w3sTemplateEngine
     }
 
     if (!$validParam) throw new RuntimeException(sprintf('DrawSlot requires an array with the following options: %s', array_values($defaultParams)));
- 
+
     foreach ($slot['contents'] as $content)
     {
     	if ($slot['contents'][0] != null)
-      {	      
+      {
 	      // Draws the slot with contents
 	      $curContent = w3sContentManagerFactory::create($content->getContentTypeId(), $content);
 	      if (isset($slot['setEventForRedraw']))
-	      { 
+	      {
 	      	$this->interactiveMenuEvents .= sprintf("Event.observe('%s', 'mouseover', InteractiveMenu.show.bind(InteractiveMenu, %s, '%s', %s, %s, '%s', '%s'));\n", 'w3sContentItem_' . $content->getId(), $content->getId(), $content->getContentTypeId(), $content->getSlotId(), $content->getGroupId(), $slot['slotName'], $slot["isRepeated"]);
 	      }
 	      else
 	      {
 	      	$this->interactiveMenuEvents .= sprintf('%s,%s,%s,%s,%s,%s,%s|', 'w3sContentItem_' . $content->getId(), $content->getId(), $content->getContentTypeId(), $content->getSlotId(), $content->getGroupId(), $slot['slotName'], $slot["isRepeated"]);
 	      }
-	      
-	      $result .= sprintf('<div id="%s">%s</div>', 'w3sContentItem_' . $content->getId(), $curContent->getDisplayContentForEditorMode());	      
+
+	      $result .= sprintf('<div id="%s">%s</div>', 'w3sContentItem_' . $content->getId(), $curContent->getDisplayContentForEditorMode());
 	    }
-	    else{	 
-        
+	    else{
+
         // Draws the slot without contents
         if (isset($slot['setEventForRedraw']))
-	      { 	      																																								  
+	      {
 	      	$this->interactiveMenuEvents .= sprintf("Event.observe('%s', 'mouseover', InteractiveMenu.hide.bind(InteractiveMenu, 0, '0', %s, 0, '%s', '0'));\n", 'w3sContent_0' . $slot['idSlot'], $slot['idSlot'], $slot['slotName']);
 	      }
 	      else
 	      {
 	      	$this->interactiveMenuEvents .= sprintf('%s,0,0,%s,0,%s,0|', 'w3sContent_0' . $slot['idSlot'], $slot['idSlot'], $slot['slotName']);
 	      }
-        $result .= sprintf('<div style="padding:1px;" id="w3sContent_0' . $slot['idSlot'] . '"><img src="%s" style="border:0px;" onclick="InteractiveMenu.openActionsMenuForAddContent(this)" /></div>', sfConfig::get('app_w3s_web_skin_images_dir') . '/structural/button_add_content.gif');       
-	    }        
-    }  
+        $result .= sprintf('<div style="padding:1px;" id="w3sContent_0' . $slot['idSlot'] . '"><img src="%s" style="border:0px;" onclick="InteractiveMenu.openActionsMenuForAddContent(this)" /></div>', sfConfig::get('app_w3s_web_skin_images_dir') . '/structural/button_add_content.gif');
+	    }
+    }
 
     return $result;
   }

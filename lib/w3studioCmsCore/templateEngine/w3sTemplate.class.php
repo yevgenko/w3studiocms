@@ -1,30 +1,30 @@
 <?php
 /*
- * This file is part of the w3studioCMS package library and it is distributed 
- * under the LGPL LICENSE Version 2.1. To use this library you must leave 
+ * This file is part of the w3studioCMS package library and it is distributed
+ * under the LGPL LICENSE Version 2.1. To use this library you must leave
  * intact this copyright notice.
- *  
+ *
  * (c) 2007-2008 Giansimon Diblas <giansimon.diblas@w3studiocms.com>
- *  
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
  * For extra documentation and help please visit http://www.w3studiocms.com
  */
- 
+
 /**
  * Template class represents the page's template.
- * 
+ *
  * Note: This object is not completed yet
  *
  * @package    sfW3studioCMSPlugin
  * @subpackage w3sTemplateEngine
  * @author     Giansimon Diblas <giansimon.diblas@w3studiocms.com>
  */
- 
+
 abstract class w3sTemplateEngine
 {
-  protected 
+  protected
     $idPage,
     $idLanguage,
     $idTemplate,
@@ -32,36 +32,36 @@ abstract class w3sTemplateEngine
     $pageName,                    // Redonly
     $templateName,
     $projectName,
-    $templateFileName, 
+    $templateFileName,
     $pageContents;
-    
+
 	abstract function drawSlot($contents);
 
 	/**
    * Constructor.
-   * 
+   *
    * @param int  The current language id
    * @param int  The current page id
    *
-   */   
+   */
   public function __construct($language, $page)
   {
     // When language is null, main language is retrieved
     if ($language == null) $language = 'none';
 
     // When page is null, home page is retrieved
-    if ($page == null) $page = 'none'; 
+    if ($page == null) $page = 'none';
 
-    // Checks that the two parameters are integers values    
+    // Checks that the two parameters are integers values
     if ((int)($language) == 0)
     {
     	$oLanguage = ($language != 'none') ? W3sLanguagePeer::getFromLanguageName($language) : W3sLanguagePeer::getMainLanguage();
     }
     else
-    { 
+    {
       $oLanguage = DbFinder::from('W3sLanguage')->findPk($language); //W3sLanguagePeer::getMainLanguage();
     }
-    
+
     if ($oLanguage != null)
     {
       $this->idLanguage = $oLanguage->getId();
@@ -72,16 +72,16 @@ abstract class w3sTemplateEngine
       $this->idLanguage = -1;
       $this->languageName = 'none';
     }
-    
+
     if ((int)($page) == 0)
-    {    	
-    	$oPage = ($page != 'none') ? W3sPagePeer::getFromPageName($page) : W3sPagePeer::getHomePage();      
+    {
+    	$oPage = ($page != 'none') ? W3sPagePeer::getFromPageName($page) : W3sPagePeer::getHomePage();
     }
     else
-    {    	
+    {
     	$oPage = DbFinder::from('W3sPage')->findPk($page);
     }
-    
+
     if ($oPage != null)
     {
       $this->idPage = $oPage->getId();
@@ -95,34 +95,34 @@ abstract class w3sTemplateEngine
 
     if ($this->idPage != -1) $this->setTemplateInfo($this->idPage);
   }
-  
+
   public function setIdPage($value){
     $this->idPage = $value;
   }
-  
+
   public function getIdPage(){
     return $this->idPage;
   }
 
   public function setIdLanguage($value){
     $this->idLanguage = $value;
-  }  
-  
+  }
+
   public function getIdLanguage(){
     return $this->idLanguage;
   }
-  
+
   public function getLanguageName(){
     return $this->languageName;
   }
-  
+
   public function getPageName(){
     return $this->pageName;
   }
-  
+
   public function getPageContents()
   {
-    return $this->pageContents;  
+    return $this->pageContents;
   }
 
   /**
@@ -183,7 +183,7 @@ abstract class w3sTemplateEngine
     $p->Parse();
     $src="";
     GetPageSrc($p->content,$src);
-    
+
     ob_start();
     PrintArray($p->content);
     $contents = ob_get_clean();
@@ -262,44 +262,44 @@ abstract class w3sTemplateEngine
 
     return $result;
   }
-  
+
   /**
-   * Checks if the requested page is not in use from another user, and free the 
+   * Checks if the requested page is not in use from another user, and free the
    * previous page used by current user.
-   * 
+   *
    * @param int  The previous page id
    *
-   */   
+   */
   public function isPageFree($prevPage)
   {
     $operation = $this->idLanguage . $this->idPage;
     $prevOperation = $this->idLanguage . $prevPage;
-    
+
     return semaphore::setRequestedOperation(sfContext::getInstance()->getUser()->getGuardUser()->getId(), $operation, $prevOperation);
   }
 
 	/**
-   * Reads all the site's template files and extracts the stylesheets' references. 
-   * 
-   * Note: It's not possibile to use the $this->response->addStyleSheet method as 
-   * made in the webSite module, because w3studioCMS needs the title attribute to 
-   * change the stylesheets in editor mode.
-   * 
-   * @return string  The html stylesheets 
+   * Reads all the site's template files and extracts the stylesheets' references.
    *
-   */  
+   * Note: It's not possibile to use the $this->response->addStyleSheet method as
+   * made in the webSite module, because w3studioCMS needs the title attribute to
+   * change the stylesheets in editor mode.
+   *
+   * @return string  The html stylesheets
+   *
+   */
   public function retrieveSiteStylesheets()
-  {    
+  {
 
     // Gets all the project's templates from the database
-    $templates = DbFinder::from('W3sTemplate')->  
+    $templates = DbFinder::from('W3sTemplate')->
 		                       leftJoin('W3sProject')->
                            find();
-    $result = ''; 
+    $result = '';
     foreach($templates as $template){
     	$templateContents = w3sCommonFunctions::readFileContents(self::getTemplateFile($template->getW3sProject()->getProjectName(), $template->getTemplateName()));
-    	$stylesheets = $this->getStylesheetsFromContents($templateContents);  
-    	foreach ($stylesheets as $style){    
+    	$stylesheets = $this->getStylesheetsFromContents($templateContents);
+    	foreach ($stylesheets as $style){
         $stylesheet = $style[0];
         if ($style[1] == 0 || w3sCommonFunctions::getTagAttribute($stylesheet, 'media') != "print")
         {
@@ -314,37 +314,37 @@ abstract class w3sTemplateEngine
 	    }
     }
 
-    return $result; 
+    return $result;
   }
-  
+
   /**
    * Retrieves the stylesheets used by the current template. The result string will
-   * be uses to change the template's stylesheet. 
-   * 
+   * be uses to change the template's stylesheet.
+   *
    * @return string  The stylesheets name formatted as style1,[style2,style3,...]
    *
-   */ 
-  public function retrieveTemplateStylesheets() 
-  {    
+   */
+  public function retrieveTemplateStylesheets()
+  {
     $stylesheets = $this->getStylesheetsFromContents($this->pageContents);
     $this->pageContents = $this->removeStylesheetsFromTemplate($stylesheets, $this->pageContents);
-    
+
     $stylesheetResults = '';
 	  foreach ($stylesheets as $stylesheet)
     {
 	    //if ($stylesheet[1] == 0)
       $stylesheetResults .= str_replace('.css', '', basename(w3sCommonFunctions::getTagAttribute($stylesheet[0], 'href'))) . ',';
 	  }
-    
-    return $stylesheetResults; 
-  }  
-  
+
+    return $stylesheetResults;
+  }
+
   /**
    * Renders the page
-   * 
-   * @return string  The rendered page 
    *
-   */ 
+   * @return string  The rendered page
+   *
+   */
   public function renderPage()
   {
     $slotNames = '';
@@ -361,11 +361,7 @@ abstract class w3sTemplateEngine
     {
       $this->pageContents = w3sCommonFunctions::displayMessage('The page or the language requested does not exist anymore in the website');
     }
-    
-    // Renders the W3StudioCMS Copyright button. Please do not remove. See the function to 
-    // learn the best way to implement it in your web site. Thank you
-    $this->pageContents = $this->renderCopyright($this->pageContents);
-    
+
     return $this->pageContents;
   }
 
@@ -381,29 +377,29 @@ abstract class w3sTemplateEngine
     $this->setCurrentTemplate($page);
 
   }
-    
+
   /**
    * Removes the stylesheets reference from the template
-   * 
+   *
    * @param array    The template's stylesheets
    * @param string   The contents to process
-   * 
+   *
    * @return string  The processed contents
    *
-   */ 
+   */
   protected function removeStylesheetsFromTemplate($stylesheets, $contents)
   {
     foreach ($stylesheets as $stylesheet)
     {
       $contents = str_replace($stylesheet[0], '', $contents);
     }
-    
+
     return $contents;
   }
-  
+
   /**
    * Retrieves from the database the template associated to page requested
-   * 
+   *
    * @return object  The retrieved page
    *
    */
@@ -418,14 +414,14 @@ abstract class w3sTemplateEngine
 	    $this->pageContents = w3sCommonFunctions::readFileContents(self::getTemplateFile($this->projectName, $this->templateName));
     }
   }
-  
+
   /**
    * Returns the page's contents grouped by slots, retrieved from database
-   * 
+   *
    * @param int  The language id
    * @param int  The page id
-   * 
-   * @return array 
+   *
+   * @return array
    *
    */
   protected function getSlotContents($idLanguage, $idPage)
@@ -484,7 +480,7 @@ abstract class w3sTemplateEngine
                            where('SlotIdDestination', $currentSlot)->
                            findOne();
           if ($mappedSlots != null)
-          { 
+          {
             $currentSlot = $mappedSlots->getSlotIdSource();
           }
           else
@@ -522,22 +518,22 @@ abstract class w3sTemplateEngine
     }
 		return $resultContents;
   }
-  
+
   /**
-   * Returns the template's stylesheets 
-   * 
+   * Returns the template's stylesheets
+   *
    * @param string  The template contents
-   * 
+   *
    * @return array
    *
    */
   protected function getStylesheetsFromContents($templateContents)
-  {    
+  {
     preg_match_all('/\<\!--\s*\[if\s*lte.*?\].*?\<\!\[\s*endif\s*\]--\>/', $templateContents, $conditionalStylesheets);
     preg_match_all('/<link.*?rel\s*=\s*["|\']stylesheet["|\'].*?href\s*=\s*["|\'](.*?)["|\'].*?\/>/', $templateContents, $stylesheets);
-   
+
     $siteStylesheets = array();
-    
+
     foreach($stylesheets[0] as $stylesheet)
     {
       $v = array();
@@ -560,34 +556,5 @@ abstract class w3sTemplateEngine
 
     //print_r($siteStylesheets); //exit;
     return $siteStylesheets;
-  }
-  
-/** 
- * Renders the W3StudioCMS Copyright button.
- * This is the only way I have to let the world to know this software,  
- * for this reason I ask you to leave the copyright intact. Consider 
- * this favour as a little price for the free use of this software.
- *  
- * If you don't like the button or if you think that it isn't 
- * harmonized with your website and you still want to remove it, 
- * I hope you will consider the possibility to draw a new button 
- * or to give me a link back to http://www.w3studiocms.com. 
- * 
- * You can place the copyright everywhere on your template, simply adding an
- * include slot statement, as follows:
- * 
- * <?php include_slot('w3s_copyright')?> 
- * 
- * Suggested example
- * <div id="w3s_copyright"><?php include_slot('w3s_copyright')?></div>
- * 
- * If you don't specify that slot in your template, ws3studioCMS renders the 
- * copyright at the end of the page.
- * 
- * Thank you!
- */
-  final protected function renderCopyright($pageContents)
-  {
-    return w3sCopyright::renderCopyright($pageContents);
   }
 }
