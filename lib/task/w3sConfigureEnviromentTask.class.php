@@ -52,7 +52,7 @@ EOF;
     $publishedDir = sfConfig::get('sf_root_dir') . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'published';
     $sfAppDir = sfConfig::get('sf_apps_dir') . DIRECTORY_SEPARATOR . $arguments['application'] . DIRECTORY_SEPARATOR;
     $sfGuardDir = $sfAppDir . 'modules' . DIRECTORY_SEPARATOR . 'sfGuardAuth';
-    $w3sDir = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'sfW3studioCmsPlugin' . DIRECTORY_SEPARATOR;
+    $w3sDir = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'w3sCmsPlugin' . DIRECTORY_SEPARATOR;
     $w3sExtraDir = $w3sDir . 'extra' . DIRECTORY_SEPARATOR;
 
     if (!is_dir($themesDir))

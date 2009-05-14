@@ -50,7 +50,7 @@ EOF;
     if (!is_file($sfAppConfigDir . '.OLD'))
     {
       rename($sfAppConfigDir, $sfAppConfigDir . '.OLD');
-      copy(sprintf("%2\$s%1\$ssfW3studioCmsPlugin%1\$sextra%1\$ssettings%1\$ssettings.yml", DIRECTORY_SEPARATOR, sfConfig::get('sf_plugins_dir')), $sfAppConfigDir);
+      copy(sprintf("%2\$s%1\$sw3sCmsPlugin%1\$sextra%1\$ssettings%1\$ssettings.yml", DIRECTORY_SEPARATOR, sfConfig::get('sf_plugins_dir')), $sfAppConfigDir);
       $this->logSection('W3studioCMS', 'Standard settings file has been installed');
 
       $cc = new sfCacheClearTask($this->dispatcher, $this->formatter);

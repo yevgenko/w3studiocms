@@ -10,7 +10,7 @@
  # file that was distributed with this source code.
  #
 propel:
-  _attributes:      { package: plugins.sfW3studioCmsPlugin.lib.model }
+  _attributes:      { package: plugins.w3sCmsPlugin.lib.model }
   w3s_content:
     id:
       type: INTEGER

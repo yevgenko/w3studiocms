@@ -61,7 +61,7 @@ EOF;
       if ($result && !@chmod(sfConfig::get('sf_cache_dir'), 0777)) $result = false;
       if ($result && !@chmod(sfConfig::get('sf_log_dir'), 0777)) $result = false;
       if ($result && !@chmod(sfConfig::get('sf_lib_dir'), 0777)) $result = false;
-      if ($result && !@chmod(sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'sfW3studioCmsPlugin' . DIRECTORY_SEPARATOR . 'config', 0777)) $result = false;
+      if ($result && !@chmod(sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'w3sCmsPlugin' . DIRECTORY_SEPARATOR . 'config', 0777)) $result = false;
       if ($result && !@chmod(sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'sfGuardPlugin' . DIRECTORY_SEPARATOR . 'config', 0777)) $result = false;
       if (!$result)
       {
@@ -121,7 +121,7 @@ EOF;
     }
     else
     {
-      $this->logSection('W3studioCMS', 'You have to enable all the modules used by W3studioCMS. See /plugins/sfW3studioCmsPlugin/extra/settings/settings.yml file.');
+      $this->logSection('W3studioCMS', 'You have to enable all the modules used by W3studioCMS. See /plugins/w3sCmsPlugin/extra/settings/settings.yml file.');
     }
 
     $this->logSection('W3studioCMS', 'W3studioCMS has been configured and it\'s now ready to be used');

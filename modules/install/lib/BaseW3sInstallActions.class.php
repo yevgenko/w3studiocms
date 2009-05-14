@@ -112,7 +112,7 @@ class BaseW3sInstallActions extends sfActions
     $prerequisites[] = array(sfConfig::get('sf_log_dir'), w3sCommonFunctions::checkFolderWritable(sfConfig::get('sf_log_dir') . DIRECTORY_SEPARATOR . 'w3stmp') ? true : false, $messages);
     $prerequisites[] = array(sfConfig::get('sf_lib_dir'), w3sCommonFunctions::checkFolderWritable(sfConfig::get('sf_lib_dir') . DIRECTORY_SEPARATOR . 'w3stmp') ? true : false, $messages);
     $prerequisites[] = array(sfConfig::get('sf_data_dir'), w3sCommonFunctions::checkFolderWritable(sfConfig::get('sf_data_dir') . DIRECTORY_SEPARATOR . 'w3stmp') ? true : false, $messages);
-    $w3sFolder = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'sfW3studioCmsPlugin' . DIRECTORY_SEPARATOR;
+    $w3sFolder = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'w3sCmsPlugin' . DIRECTORY_SEPARATOR;
     $prerequisites[] = array($w3sFolder . 'config', w3sCommonFunctions::checkFolderWritable($w3sFolder . 'config' . DIRECTORY_SEPARATOR . 'w3stmp') ? true : false, $messages);
     $sfGuardFolder = sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . 'sfGuardPlugin' . DIRECTORY_SEPARATOR;
     $prerequisites[] = array($sfGuardFolder . 'config', w3sCommonFunctions::checkFolderWritable($sfGuardFolder . 'config' . DIRECTORY_SEPARATOR . 'w3stmp') ? true : false, $messages);

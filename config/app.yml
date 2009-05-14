@@ -11,11 +11,11 @@ all:
   absolute_images_path: '/uploads/assets/'
   
   # Configuration file for loading scripts
-  w3s_scripts_dir: %SF_PLUGINS_DIR%/sfW3studioCmsPlugin/config/w3s_scripts
+  w3s_scripts_dir: %SF_PLUGINS_DIR%/w3sCmsPlugin/config/w3s_scripts
   
-  # Some useful paths to sfW3studioCmsPlugin web directory
-  w3s_web_images_dir: /sfW3studioCmsPlugin/images
-  w3s_web_js_dir: /sfW3studioCmsPlugin/js
+  # Some useful paths to w3sCmsPlugin web directory
+  w3s_web_images_dir: /w3sCmsPlugin/images
+  w3s_web_js_dir: /w3sCmsPlugin/js
   w3s_web_themes_dir: %SF_ROOT_DIR%/themes
   w3s_web_published_dir: %SF_DATA_DIR%/published
   

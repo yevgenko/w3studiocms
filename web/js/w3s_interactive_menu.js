@@ -117,19 +117,19 @@ var interactiveMenu = Class.create({
 		  switch (this.repeated){
 		    case '0':
 		      $('w3s_im_clone_element').style.backgroundColor = '#EEF9F9';
-		      $('w3s_im_actions').style.backgroundImage = 'url(/sfW3studioCmsPlugin/images/interactive_menu/actions_bg_0.png)';
+		      $('w3s_im_actions').style.backgroundImage = 'url(/w3sCmsPlugin/images/interactive_menu/actions_bg_0.png)';
 		      $('w3s_im_actions').style.backgroundColor = '#669900';
 		      $('w3s_im_commands').style.backgroundColor = '#336600';
 		      break;           
 		    case '1':
 		      $('w3s_im_clone_element').style.backgroundColor = '#990000';
-		      $('w3s_im_actions').style.backgroundImage = 'url(/sfW3studioCmsPlugin/images/interactive_menu/actions_bg_1.png)';
+		      $('w3s_im_actions').style.backgroundImage = 'url(/w3sCmsPlugin/images/interactive_menu/actions_bg_1.png)';
 		      $('w3s_im_actions').style.backgroundColor = '#CC9900';
 		      $('w3s_im_commands').style.backgroundColor = '#CC6600';
 		      break;
 		    case '2':
 		      $('w3s_im_clone_element').style.backgroundColor = '#000066';
-		      $('w3s_im_actions').style.backgroundImage = 'url(/sfW3studioCmsPlugin/images/interactive_menu/actions_bg_2.png)';
+		      $('w3s_im_actions').style.backgroundImage = 'url(/w3sCmsPlugin/images/interactive_menu/actions_bg_2.png)';
 		      $('w3s_im_actions').style.backgroundColor = '#006699';
 		      $('w3s_im_commands').style.backgroundColor = '#003366';
 		      break;
