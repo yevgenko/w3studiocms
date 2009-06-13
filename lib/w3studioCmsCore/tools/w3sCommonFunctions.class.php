@@ -535,7 +535,9 @@ class w3sCommonFunctions
         else
         {
           if (substr($href, 0, 1) != '/' &&
+              substr($href, 0, 1) != '#' &&
               strpos($href, 'http://') === false &&
+              strpos($href, 'https://') === false &&
               strpos($href, 'mailto:') === false &&
               $href != '#')
               {
