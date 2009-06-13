@@ -81,12 +81,22 @@ class w3sContentManagerImage extends w3sContentManager{
     }
 
   	// Creates the image
-  	$image = sprintf('<img src="%s" alt="%s" title="%s" width="%s" height="%s" />', 
-  										$src, 
-											$formattedProperties['w3s_ppt_alt_text'],
-											$formattedProperties['w3s_ppt_title_text'],
-											$formattedProperties['w3s_ppt_width'],
-											$formattedProperties['w3s_ppt_height']);
+    $image = sprintf('<img src="%s"', $src);
+
+    if (isset($formattedProperties['w3s_ppt_alt_text']) && $formattedProperties['w3s_ppt_alt_text'] != '')
+      $image .= ' alt="' . $formattedProperties['w3s_ppt_alt_text'] . '"';
+
+    if (isset($formattedProperties['w3s_ppt_title_text']) && $formattedProperties['w3s_ppt_title_text'] != '')
+      $image .= ' title="' . $formattedProperties['w3s_ppt_title_text'] . '"';
+
+    if (isset($formattedProperties['w3s_ppt_width']) && $formattedProperties['w3s_ppt_width'] != '')
+      $image .= ' width="' . $formattedProperties['w3s_ppt_width'] . '"';
+
+    if (isset($formattedProperties['w3s_ppt_height']) && $formattedProperties['w3s_ppt_height'] != '')
+      $image .= ' height="' . $formattedProperties['w3s_ppt_height'] . '"';
+
+    $image .= ' />';
+
   	
   	// Check for a link
   	if ($formattedProperties['w3s_ppt_int_link'] != 0)
